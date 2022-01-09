@@ -1,4 +1,4 @@
-package com.kh.mybatis.member.model.vo;
+package com.ye.mybatis.member.model.vo;
 
 import java.sql.Date;
 

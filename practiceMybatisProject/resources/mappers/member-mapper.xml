@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+<!-- namespace : 해당 mapper파일만의 고유한 별칭 -->	
+	
+	<!-- 
+	
+		* DML문일경우
+		<insert|update|detelte id="각 sql문의 식별자" parameterType="전달받을 java 타입(풀클래스명)|별칭">
+			
+		</insert|update|detelte>
+		// DML문 같은 경우 실행결과가 처리된행수(int)기 때문에 resultType 또는 resultMap에 대한 속성은 안써도됨!
+		
+		
+		* SELECT문일경우
+		<select id="각 sql문의 식별자" [parameterType="전달받을 java 타입(풀클래스명)|별칭"] 
+				resultType="조회결과를 반환하고자하는 자바타입" | resultMap="조회결과를 뽑아서 매핑할 resultMap의 id">
+		
+		</select>
+		
+		? 대신에 해당 sql문에 전달된 객체로부터 값을 꺼낼 때 #{ 필드명 또는 변수명 또는 키값 } 이용
+	
+	 -->
+	 
+	 <!-- 
+	 	* resultMap 마이바티스의 핵심 기능 중 하나!
+	 	  ResultSet으로부터 조회된 컬럼값 하나씩 뽑아서 내가 지정한 vo객체에 각 필드에 담는(매핑) JDBC 코드를 줄여주는 역할 수행
+	 	  
+	 	  <resultMap id="식별자" type="조회결과를 담아서 반환하고자 하는 vo객체의 타입(풀클래스명)|별칭(typealias에 등록된)"> 
+	 	  		<result column="조회결과를 뽑고자하는 DB컬럼명" property="해당 결과를 담고자하는 필드명" />
+	 	  		<result column="조회결과를 뽑고자하는 DB컬럼명" property="해당 결과를 담고자하는 필드명" />
+	 	  		<result column="조회결과를 뽑고자하는 DB컬럼명" property="해당 결과를 담고자하는 필드명" />
+	 	  </resultMap>
+	  -->
+	  
+	 <!-- colunm에는 해당 db에 존재하는 컬럼명이기 때문에, 대소문자를 가리지 않지만, 필드명은 대소문자 그대로 작성해야한다. -->
+	 <resultMap id="memberResultSet" type="Member">
+	 	<result column="user_no" property="userNo" />
+	 	<result column="user_id" property="userId" />
+	 	<result column="user_pwd" property="userPwd" />
+	 	<result column="user_name" property="userName" />
+	 	<result column="email" property="email" />
+	 	<result column="birthday" property="birthday" />
+	 	<result column="gender" property="gender" />
+	 	<result column="phone" property="phone" />
+	 	<result column="address" property="address" />
+	 	<result column="enroll_date" property="enrollDate" />
+	 	<result column="modify_date" property="modifyDate" />
+	 	<result column="status" property="status" />
+	 </resultMap>
+	 
+	 <!-- 
+	 	조회되는 컬럼명이 필드명과 아예 동일할 경우, resultMap = "Member" 만 하면 되지만
+	 	지금은 user_no, user_id, user_pwd 와 같은 필드명과 다른 형식으로 되어있기 때문에 직접 매핑을 해줘야야함!!
+	 	=> resultMap 사용!
+	  -->
+	  
+	<!-- resultMap : 참조하고자하는 resultMap의 id를 작성 -->
+	<select id="loginMember" resultMap="memberResultSet" parameterType="Member">
+		select
+		       user_no
+		     , user_id
+		     , user_pwd
+		     , user_name
+		     , email
+		     , birthday
+		     , gender
+		     , phone
+		     , address
+		     , enroll_date
+		     , modify_date
+		     , status
+		  from member
+		 where user_id = #{ userId }
+		   and user_pwd = #{ userPwd }
+		   and status = 'Y'	
+	</select>
+	
+	
+	
+	<!-- <insert id="insertMember" parameterType="com.kh.mybatis.member.model.vo.Member"> -->
+	<insert id="insertMember" parameterType="Member">
+		insert
+		  into member
+		  (
+		    user_no
+		  , user_id
+		  , user_pwd
+		  , user_name
+		  , email
+		  , birthday
+		  , gender
+		  , phone
+		  , address
+		  )
+		  values
+		  (
+		    SEQ_UNO.nextval
+		  , #{ userId }
+		  , #{ userPwd }
+		  , #{ userName }
+		  , #{ email }
+		  , #{ birthday }
+		  , #{ gender }
+		  , #{ phone }
+		  , #{ address }
+		  )
+	</insert>
+	
+
+</mapper>  
+
