@@ -2,7 +2,7 @@ package com.ye.mybatis.member.model.service;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.ye.mybatis.common.template.Template;
+import static com.ye.mybatis.common.template.Template.*;
 import com.ye.mybatis.member.model.dao.MemberDao;
 import com.ye.mybatis.member.model.vo.Member;
 
@@ -15,7 +15,7 @@ public class MemberServiceImpl implements MemberService{
 		// Template클래스에 있는 getSqlSession() 메소드 호출로 mybatis-config.xml 파일 읽어들여서 
 		// 해당 DB와 접속된 SqlSession 객체를 받아볼 수 있음!!
 		
-		SqlSession sqlSession = Template.getSqlSession();
+		SqlSession sqlSession = getSqlSession();
 		// 이 때 mybatis-config.xml 문서 읽어들임
 		// 이 때 등록시킨 mapper.xml 문서들도 다 읽어들여짐
 		
@@ -34,8 +34,10 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public Member loginMember(Member m) {
-		// TODO Auto-generated method stub
-		return null;
+		SqlSession sqlSession = getSqlSession();
+		Member loginUser = mDao.loginMember(sqlSession, m);
+		sqlSession.close();
+		return loginUser;
 	}
 
 	@Override
