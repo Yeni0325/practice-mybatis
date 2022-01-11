@@ -16,6 +16,13 @@
 		text-decoration:none;
 	}
 </style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 	
@@ -34,10 +41,19 @@
 					<option value="title">제목</option>
 					<option value="content">내용</option>
 				</select>
-				<input type="text" name="keyword">
+				<input type="text" name="keyword" value=${ keyword }>
 				<button type="submit">검색</button>
 			</form>
 		</div>
+		
+		
+		<c:if test="${ not empty condition }">
+			<script>
+				$(function(){
+					$("#search-area option[value=${condition}]").attr("selected", true);
+				})
+			</script>	
+		</c:if>
 		<br>
 		
 		<table id="list-area">
@@ -71,8 +87,19 @@
 			</c:if>
 			
 			<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-				<a href="list.bo?cpage=${ p }">[${ p }]</a>
+			
+				<c:choose>
+					<c:when test="${ empty condition}">
+						<a href="list.bo?cpage=${ p }">[${ p }]</a>
+					</c:when>
+					<c:otherwise>
+						<a href="search.bo?cpage=${ p }&condition=${ condition }&keyword=${keyword}">[${ p }]</a>
+					</c:otherwise>
+				</c:choose>
+					
+				
 			</c:forEach>
+				
 	
 			<c:if test="${ pi.currentPage ne pi.maxPage }">
 				<a href="list.bo?cpage=${ pi.currentPage + 1 }">[다음]</a>

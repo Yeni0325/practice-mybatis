@@ -18,6 +18,8 @@
 	<!-- typeAlias : VO/DTO 클래스들의 풀클래스명을 단순한 클래스명으로 사용하기 위해서 별칭을 등록할 수 있는 영역 -->
 	<typeAliases>
 		<typeAlias type="com.ye.mybatis.member.model.vo.Member" alias="Member" />
+		<typeAlias type="com.ye.mybatis.board.model.vo.Board" alias="Board" />
+ 		<typeAlias type="com.ye.mybatis.board.model.vo.Reply" alias="Reply" />
 	</typeAliases>
 	
 	<!-- environment : mybatis에서 연동할 DB 정보들을 등록하는 영역 -->
