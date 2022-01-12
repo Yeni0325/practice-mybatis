@@ -96,8 +96,7 @@
 						<a href="search.bo?cpage=${ p }&condition=${ condition }&keyword=${keyword}">[${ p }]</a>
 					</c:otherwise>
 				</c:choose>
-					
-				
+							
 			</c:forEach>
 				
 	

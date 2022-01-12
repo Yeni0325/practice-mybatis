@@ -3,7 +3,25 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="boardMapper">
-
+	<!-- 
+	
+		* DML문일경우
+		<insert|update|detelte id="각 sql문의 식별자" parameterType="전달받을 java 타입(풀클래스명)|별칭">
+			
+		</insert|update|detelte>
+		// DML문 같은 경우 실행결과가 처리된행수(int)기 때문에 resultType 또는 resultMap에 대한 속성은 안써도됨!
+		
+		
+		* SELECT문일경우
+		<select id="각 sql문의 식별자" [parameterType="전달받을 java 타입(풀클래스명)|별칭"] 
+				resultType="조회결과를 반환하고자하는 자바타입" | resultMap="조회결과를 뽑아서 매핑할 resultMap의 id">
+		
+		</select>
+		
+		? 대신에 해당 sql문에 전달된 객체로부터 값을 꺼낼 때 #{ 필드명 또는 변수명 또는 키값 } 이용
+	
+	 -->
+	 
 	<resultMap id="boardResultSet" type="Board"> <!-- 항상 상단에 있는걸 권장!  -->
 		<result column="board_no" property="boardNo" />
 		<result column="board_title" property="boardTitle" />
